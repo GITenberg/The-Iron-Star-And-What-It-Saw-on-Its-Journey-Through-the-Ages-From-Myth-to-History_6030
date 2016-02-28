@@ -1,0 +1,23 @@
+_repo: The-Iron-Star-And-What-It-Saw-on-Its-Journey-Through-the-Ages-From-Myth-to-History_6030
+creator:
+  author:
+    agent_name: True, John Preston
+    birthdate: 1859
+    deathdate: 1933
+    gutenberg_agent_id: '1915'
+    url: http://www.gutenberg.org/2009/agents/1915
+description: ''
+gutenberg_issued: '2004-07-01'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '6030'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcsh 'Iron -- History -- Juvenile fiction'
+- !lcc 'PZ'
+title: "The Iron Star — And What It Saw on Its Journey Through the Ages\r\nFrom Myth\
+  \ to History"
+url: http://www.gutenberg.org/ebooks/6030
