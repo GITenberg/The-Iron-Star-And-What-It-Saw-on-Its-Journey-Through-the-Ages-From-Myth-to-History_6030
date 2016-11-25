@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: o35mZ2r0+B3UMd4V3/QH7pZp1HlOPcQpu+7qkNjYsFc0WBkVxzJS5yc4QNsRe4V3TwybUueNaHcyIuLnCiyCmzPrg36g+4ywX/ucthxJEalmoinwGjiwIpmFJ5zJ2ASlP7Mar8HkXePTzfaipfflNUIi9hh6MmINyHYr//vK4lEk7s+9apynH/3q/OAT80znUQfbNsirzYUEqnjZU6/vFRCiEjfcvjXnkQffAPT334ViKi9BW5CyQaTIUHPAvDjUX6lCCjMXWtbRYJo1JiLe94CK/M6XGal62dyUkgSRmoPIM8oNIyP2YgBwFA/uaXAEMvVRF0ilvNEkN/8c2xDYJz6etPnhQ59iCpi1gSMoKkr/KR4/sMEo1l0QU5sDKI0GM5gr1yYbd3G2Jc0OTj5a/S4aUniNVPnxLPj2yS1zAlvwP+CH+Y+P22edr0kkzIdzkrsLP7wjK9NkGeaWeIeOdhCHq0ylPtQC8vDbBOsM55NXXL8TCuxiDqgjalL5/UoDtOFiw4lrtH5BWSAvQN0ofN0+0Hnb81G8Mhb4gRNMk0PywGP7G4LM/UqpQ1iRmb+OSTkBYutjvMA6xNfvNObN8ghc+Kbn5BE5FBJRAD/qJmv5Rb/AoknPJpkrwuFXIfasTbDaShGyokTtvQaxBQiqoB9XhkIYccOoAAZCgwAMA/8=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/The-Iron-Star-And-What-It-Saw-on-Its-Journey-Through-the-Ages-From-Myth-to-History_6030
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
